@@ -12,7 +12,7 @@ st.title("AI Chat Room")
 ss = st.session_state
 
 with st.sidebar:
-    ss.openai_api_key = st.text_input("OpenAI API key", placeholder="sk-xxxx")
+    ss.openai_api_key = st.text_input("OpenAI API key", placeholder="sk-xxxx", type="password")
 
 if key := (ss.openai_api_key or os.getenv("OPENAI_API_KEY")):
     oai = openai.OpenAI(api_key=key)
