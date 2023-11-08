@@ -6,6 +6,8 @@ import openai
 import streamlit as st
 
 
+st.set_page_config(page_title="AI Chat Room", page_icon="💬")
+
 st.title("AI Chat Room")
 
 
@@ -62,8 +64,12 @@ with st.form("config"):
         with col2:
             bot_b_avatar = st.text_input("Avatar", value="👨")
         bot_b_instruct = st.text_area("Instructions", value="You are Bob. You are talking with Alice.")
-    init_message = st.text_input("Initial message", value="Hi! I'm Alice. How are you?")
-    if st.form_submit_button("Submit"):
+        init_message = st.text_input(
+            "Initial message",
+            value="Hi! I'm Alice. How are you",
+            help="The initial message that will be sent from the first bot to the other."
+        )
+    if st.form_submit_button("Save"):
         ss.bots = [
             Bot(bot_a_name, bot_a_instruct, bot_a_avatar),
             Bot(bot_b_name, bot_b_instruct, bot_b_avatar),
@@ -71,7 +77,7 @@ with st.form("config"):
 
 
 box = st.container()
-chat = st.button("Continue")
+chat = st.button("Continue Chat")
 
 
 if "bots" in ss:
@@ -117,7 +123,7 @@ if "bots" in ss:
             ):
                 answer = "\n".join(content.text.value for content in answer)
         else:
-            answer = f"Error: {run}"
+            answer = f"Error: {run.last_error}"
         with box.chat_message(name=bot.name, avatar=bot.avatar):
             st.markdown(answer)
         
