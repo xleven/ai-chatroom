@@ -64,11 +64,11 @@ with st.form("config"):
         with col2:
             bot_b_avatar = st.text_input("Avatar", value="👨")
         bot_b_instruct = st.text_area("Instructions", value="You are Bob. You are talking with Alice.")
-        init_message = st.text_input(
-            "Initial message",
-            value="Hi! I'm Alice. How are you",
-            help="The initial message that will be sent from the first bot to the other."
-        )
+    init_message = st.text_input(
+        "Initial message",
+        value="Hi! I'm Alice. How are you",
+        help="The initial message that will be sent from the first bot to the other."
+    )
     if st.form_submit_button("Save"):
         ss.bots = [
             Bot(bot_a_name, bot_a_instruct, bot_a_avatar),
