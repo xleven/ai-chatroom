@@ -14,7 +14,10 @@ ss = st.session_state
 with st.sidebar:
     ss.openai_api_key = st.text_input("OpenAI API key", placeholder="sk-xxxx")
 
-oai = openai.OpenAI(api_key=(ss.openai_api_key or os.getenv("OPENAI_API_KEY")))
+if key := (ss.openai_api_key or os.getenv("OPENAI_API_KEY")):
+    oai = openai.OpenAI(api_key=key)
+else:
+    st.warning("Please set your OpenAI API key")
 
 class Bot:
     def __init__(
