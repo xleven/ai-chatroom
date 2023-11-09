@@ -84,7 +84,7 @@ if "bots" in ss:
     
     for message in ss.messages:
         with box.chat_message(name=ss.bots[message.index].name, avatar=ss.bots[message.index].avatar):
-            st.markdown(message.content)
+            st.markdown(message.content, unsafe_allow_html=True)
 
     chat = [
         col.button(f"{ss.bots[i].name} Say", key=f"chat_{i}")
@@ -99,7 +99,7 @@ if "bots" in ss:
             _ = oai.beta.threads.messages.create(
                 thread_id=bot.thread.id,
                 role="user",
-                content=f"{ss.bots[message.index].name}: {message.content}",
+                content=f"<!-- {ss.bots[message.index].name} -->\n{message.content}",
             )
         run = oai.beta.threads.runs.create(
             thread_id=bot.thread.id,
@@ -124,6 +124,6 @@ if "bots" in ss:
         else:
             answer = f"Error: {run.last_error}"
         with box.chat_message(name=bot.name, avatar=bot.avatar):
-            st.markdown(answer)
+            st.markdown(answer, unsafe_allow_html=True)
         
         ss.messages.append(Message(index, answer))
